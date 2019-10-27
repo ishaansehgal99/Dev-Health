@@ -60,7 +60,7 @@ var lastLookAway = Date.now();
 var lastLookScreen = Date.now();
 //var maxScreenLookMS = 20 * 60 * 1000;
 var maxScreenLookMS = 20 * 1000;
-var minLookAwayMS = 20 * 1000;
+var minLookAwayMS = 20 * 60 * 1000;
 var lastSound20 = Date.now();
 async function monitor202020(){
   if(Date.now() - lastLookScreen > minLookAwayMS) {
