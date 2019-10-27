@@ -15,13 +15,17 @@ var use202020 = true;
 var usePosture = false;
 
 // Add listeners to on off switches
-if(document.getElementById("switch202020")){
-    document.getElementById("switch202020").addEventListener("click", function() {
+
+let switch202020 = document.getElementById("switch202020");
+if(switch202020){
+    switch202020.addEventListener("click", function() {
         use202020 = !use202020;
     });
 }
-if(document.getElementById("switchPosture")){
-    document.getElementById("switchPosture").addEventListener("click", function() {
+
+let switchPosture = document.getElementById("switchPosture");
+if(switchPosture){
+    switchPosture.addEventListener("click", function() {
         usePosture = !usePosture;
     });
 }
