@@ -11,7 +11,7 @@ var initialRightEye;
 var initialLeftShoulder;
 var initialRightShoulder;
 
-var use202020 = true;
+var use202020 = false;
 var usePosture = true;
 
 // Add listeners to on off switches
