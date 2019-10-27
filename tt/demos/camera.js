@@ -16,7 +16,7 @@
  */
 import * as posenet from '@tensorflow-models/posenet';
 import { monitor } from "./monitoring";
-import { isInitialized, initialize, getOriginalPosition } from "./initialization";
+import { isInitialized, update, getOriginalPosition } from "./initialization";
 import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
 
 
@@ -117,20 +117,19 @@ function detectPoseInRealTime(video, net) {
 
       if (isInitialized()){
         monitor(currentPose["keypoints"]);
-      } else {
-
-        // Print video
-        ctx.clearRect(0, 0, videoWidth, videoHeight);
-        ctx.save();
-        ctx.scale(-1, 1);
-        ctx.translate(-videoWidth, 0);
-        ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
-        ctx.restore();
-        drawKeypoints(currentPose["keypoints"], minPartConfidence, ctx);
-        drawSkeleton(currentPose["keypoints"], minPartConfidence, ctx);
-
-        initialize(currentPose["keypoints"]);
       }
+
+      // Print video
+      ctx.clearRect(0, 0, videoWidth, videoHeight);
+      ctx.save();
+      ctx.scale(-1, 1);
+      ctx.translate(-videoWidth, 0);
+      ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
+      ctx.restore();
+      drawKeypoints(currentPose["keypoints"], minPartConfidence, ctx);
+      drawSkeleton(currentPose["keypoints"], minPartConfidence, ctx);
+      update(currentPose["keypoints"]);
+      
     }
   }
 

@@ -1,5 +1,5 @@
 import {getOriginalPosition} from './initialization';
-
+import {dim, undim, sound} from "./notification";
 
 // Variables for functions
 var currentLeftEye;
@@ -11,9 +11,8 @@ var initialRightEye;
 var initialLeftShoulder;
 var initialRightShoulder;
 
-var use202020 = false;
-var usePosture = true;
-var useBreaks = false;
+var use202020 = true;
+var usePosture = false;
 
 // Add listeners to on off switches
 
@@ -31,12 +30,6 @@ if(switchPosture){
     });
 }
 
-// let breaksPosture = document.getElementById("breaksPosture");
-// if(breaksPosture){
-//     breaksPosture.addEventListener("click", function() {
-//         useBreaks = !useBreaks;
-//     });
-// }
 
 // Main function that gets called to deal with a new position
 export async function monitor(pos){
@@ -58,16 +51,31 @@ export async function monitor(pos){
   if (usePosture) {
     monitorPosture();
   }
-  // if (useBreaks) {
-  //   monitorBreaks();
-  // }
 
 }
 
+
+// 20 20 20 logic
+var lastLookAway = Date.now();
+var lastLookScreen = Date.now();
+//var maxScreenLookMS = 20 * 60 * 1000;
+var maxScreenLookMS = 20 * 1000;
+var minLookAwayMS = 20 * 1000;
 async function monitor202020(){
-
+  if(Date.now() - lastLookScreen > minLookAwayMS) {
+    lastLookAway = Date.now();
+    lastLookScreen = Date.now();
+  }
+  else{
+    lastLookScreen = Date.now();
+    if (lastLookScreen > lastLookAway + maxScreenLookMS) {
+      sound();
+    }
+  }
 }
 
+
+// Posture logic
 var badCount = 0;
 var goodCount = 0;
 var goodBadQueue = []
@@ -77,6 +85,7 @@ async function monitorPosture(){
     (currentRightEye["position"]["x"] - currentLeftEye["position"]["x"]);
   var initialRatio = (initialRightShoulder["position"]["x"] - initialLeftShoulder["position"]["x"]) /
     (initialRightEye["position"]["x"] - initialLeftEye["position"]["x"]);
+
 
 
   // Keeps track of goodCount and badCount
@@ -97,26 +106,8 @@ async function monitorPosture(){
   }
 
   if (badCount > 80) {
-      console.log("Bad Posture");
+      dim();
   } else {
-      console.log("Good Posture");
-  }
-}
-
-var workLength = 1800;
-var breakLength = 60;
-var startOfSession = Date.now();
-var lastTimeUsed = Date.now();
-async function monitorBreaks(){
-
-  if(currentLeftEye["score"] > 0.5 && currentRightEye["score"] > 0.5){
-      if (lastTimeUsed + 1000 * breakLength < Date.now()) {
-          startOfSession = Date.now();
-      }
-      lastTimeUsed = Date.now();
-      console.log(lastTimeUsed - startOfSession);
-  }
-  if (((lastTimeUsed - startOfSession) / 1000) > workLength) {
-      console.log("Take a break!");
+      undim();
   }
 }
