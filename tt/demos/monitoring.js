@@ -12,8 +12,8 @@ var initialLeftShoulder;
 var initialRightShoulder;
 
 var use202020 = false;
-var usePosture = false;
-var useBreaks = true;
+var usePosture = true;
+var useBreaks = false;
 
 // Add listeners to on off switches
 if(document.getElementById("switch202020")){
