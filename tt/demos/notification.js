@@ -1,11 +1,17 @@
-export async function dim(level){
+export async function dim(){
 
 }
 
-export async function popup(message){
+export async function undim(){
 
 }
 
-export async function sound(tone){
+export async function popup(text){
 
+}
+
+export async function sound(){
+	console.log("sound");
+	var audio = new Audio('meditation.mp3');
+	audio.play();
 }
