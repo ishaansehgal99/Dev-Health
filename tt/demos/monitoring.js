@@ -12,7 +12,7 @@ var initialLeftShoulder;
 var initialRightShoulder;
 
 var use202020 = true;
-var usePosture = false;
+var usePosture = true;
 
 // Add listeners to on off switches
 
@@ -61,6 +61,7 @@ var lastLookScreen = Date.now();
 //var maxScreenLookMS = 20 * 60 * 1000;
 var maxScreenLookMS = 20 * 1000;
 var minLookAwayMS = 20 * 1000;
+var lastSound20 = Date.now();
 async function monitor202020(){
   if(Date.now() - lastLookScreen > minLookAwayMS) {
     lastLookAway = Date.now();
@@ -68,8 +69,9 @@ async function monitor202020(){
   }
   else{
     lastLookScreen = Date.now();
-    if (lastLookScreen > lastLookAway + maxScreenLookMS) {
+    if (lastLookScreen > lastLookAway + maxScreenLookMS && lastSound20 + 20 * 1000 < Date.now()) {
       sound();
+      lastSound20 = Date.now();
     }
   }
 }
@@ -78,7 +80,8 @@ async function monitor202020(){
 // Posture logic
 var badCount = 0;
 var goodCount = 0;
-var goodBadQueue = []
+var goodBadQueue = [];
+var lastSoundPosture = Date.now();
 async function monitorPosture(){
 
   var currentRatio = (currentRightShoulder["position"]["x"] - currentLeftShoulder["position"]["x"]) /
@@ -105,9 +108,8 @@ async function monitorPosture(){
     }
   }
 
-  if (badCount > 80) {
+  if (badCount > 80 && Date.now() > lastSoundPosture + 5000) {
       dim();
-  } else {
-      undim();
+      lastSoundPosture = Date.now();
   }
 }
