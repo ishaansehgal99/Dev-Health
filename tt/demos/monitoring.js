@@ -16,21 +16,27 @@ var usePosture = true;
 var useBreaks = false;
 
 // Add listeners to on off switches
-if(document.getElementById("switch202020")){
-    document.getElementById("switch202020").addEventListener("click", function() {
+
+let switch202020 = document.getElementById("switch202020");
+if(switch202020){
+    switch202020.addEventListener("click", function() {
         use202020 = !use202020;
     });
 }
-if(document.getElementById("switchPosture")){
-    document.getElementById("switchPosture").addEventListener("click", function() {
+
+let switchPosture = document.getElementById("switchPosture");
+if(switchPosture){
+    switchPosture.addEventListener("click", function() {
         usePosture = !usePosture;
     });
 }
-if(document.getElementById("breaksPosture")){
-    document.getElementById("breaksPosture").addEventListener("click", function() {
-        useBreaks = !useBreaks;
-    });
-}
+
+// let breaksPosture = document.getElementById("breaksPosture");
+// if(breaksPosture){
+//     breaksPosture.addEventListener("click", function() {
+//         useBreaks = !useBreaks;
+//     });
+// }
 
 // Main function that gets called to deal with a new position
 export async function monitor(pos){
@@ -52,9 +58,9 @@ export async function monitor(pos){
   if (usePosture) {
     monitorPosture();
   }
-  if (useBreaks) {
-    monitorBreaks();
-  }
+  // if (useBreaks) {
+  //   monitorBreaks();
+  // }
 
 }
 
