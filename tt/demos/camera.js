@@ -105,7 +105,10 @@ function detectPoseInRealTime(video, net) {
     let minPartConfidence = 0.1;
     const pose = await net.estimatePoses(video, {
       flipHorizontal: flipPoseHorizontal,
-      decodingMethod: 'single-person'
+      decodingMethod: 'multi-person',
+      maxDetections: 5,
+      scoreThreshold: 0.1,
+      nmsRadius: 30
     });
 
     var currentPose = pose[0];
