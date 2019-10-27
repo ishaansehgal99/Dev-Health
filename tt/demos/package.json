@@ -11,6 +11,7 @@
   "dependencies": {
     "@tensorflow-models/posenet": "^2.1.1",
     "@tensorflow/tfjs": "^1.1.2",
+    "electron-packager": "^14.0.6",
     "stats.js": "^0.17.0"
   },
   "scripts": {
@@ -25,7 +26,6 @@
     "crypto": false
   },
   "devDependencies": {
-    "electron": "^7.0.0",
     "babel-core": "^6.26.3",
     "babel-plugin-transform-runtime": "~6.23.0",
     "babel-polyfill": "~6.26.0",
@@ -34,6 +34,7 @@
     "clang-format": "~1.2.2",
     "cross-env": "^5.2.0",
     "dat.gui": "^0.7.2",
+    "electron": "^7.0.0",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
     "parcel-bundler": "~1.12.4",

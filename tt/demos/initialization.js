@@ -14,10 +14,12 @@ export function initialize(pos){
 	initialPos = pos;
 }
 
-if(document.getElementById("nextpage")){
-    document.getElementById("nextpage").addEventListener("click", function() {
+let nextpage = document.getElementById("nextpage");
+if(nextpage){
+  nextpage.addEventListener("click", function() {
+		console.log('helo');
+				var audio = new Audio('./Zymbel.mp3');
+				audio.play();
         initialized = true;
-        document.getElementById('output').style.display = "none";
-        document.getElementById('nextpage').style.display = "none";
     });
 }
