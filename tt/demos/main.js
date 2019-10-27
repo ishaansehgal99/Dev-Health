@@ -1,10 +1,12 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
+const electron = require('electron');
 const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let tintWindow
 
 function createWindow () {
   // Create the browser window.
@@ -35,6 +37,37 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
+
+
+app.on('ready', () => {
+  const {width, height} = electron.screen.getPrimaryDisplay().size
+  console.log(width + "|" + height);
+  tintWindow = new BrowserWindow({
+          width: width,
+          height: height,
+          x:0, y:0,
+          alwaysOnTop: true,
+          frame: false,
+          resizable: false,
+          backgroundColor: "#ff0000"
+          
+  })
+  tintWindow.setAlwaysOnTop(true, "screen-saver");
+  tintWindow.setIgnoreMouseEvents(true);
+  tintWindow.setOpacity(0.0);
+});
+
+const { ipcMain } = require('electron')
+ipcMain.on('asynchronous-message', (event, arg) => {
+  console.log(arg) // prints "ping"
+  event.reply('asynchronous-reply', 'pong')
+})
+
+ipcMain.on('synchronous-message', (event, arg) => {
+  console.log(arg) // prints "ping"
+  event.returnValue = 'pong'
+})
+
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
